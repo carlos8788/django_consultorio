@@ -1,0 +1,7 @@
+.env
+env
+migrations
+__pycache__
+__init__.py
+all.json
+db.sqlite3
