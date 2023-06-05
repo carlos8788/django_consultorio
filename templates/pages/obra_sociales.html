@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block contenedor %}
+
+
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Dirección</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Teléfono</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for obra_social in obras_sociales %}
+            <tr>
+                <th scope="row">{{ obra_social.id }}</th>
+                <td>{{ obra_social.nombre }}</td>
+                <td>{{ obra_social.direccion }}</td>
+                <td>
+                    {% if obra_social.estado == "Activo" %}
+                    <span class="text-success">{{ obra_social.estado }}</span>
+                    {% elif obra_social.estado == "Suspendido" %}
+                    <span class="text-danger">{{ obra_social.estado }}</span>
+                    {% endif %}
+                </td>
+                <td>{{ obra_social.telefono }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

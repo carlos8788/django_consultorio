@@ -1,0 +1,8 @@
+
+from django.urls import path, include
+from .views import *
+urlpatterns = [
+    path('', cargar_datos, name='turnos'),
+    path('mostrar_turnos', turnos, name='mostrar_turnos'),
+    path('filtrar_fecha/', filtrar_fecha, name='filtrar_fecha'),
+]

@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block contenedor %}
+<h1>Login</h1>
+<form class="formulario" method="POST">
+    {% csrf_token %}
+    <div class="formulario--body">
+        {{form.as_p}}
+        <button href="" class="formulario--btn">Iniciar sesión</button>
+    </div>
+</form>
+{% endblock %}
