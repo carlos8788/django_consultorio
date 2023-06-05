@@ -1,7 +1,6 @@
 .env
 env
-migrations
 __pycache__
-
+build.sh
 all.json
 db.sqlite3
