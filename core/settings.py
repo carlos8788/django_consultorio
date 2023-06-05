@@ -110,7 +110,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # }
 
 DATABASE_URL = os.getenv('DATABASE_URL')
-
+print(DATABASE_URL)
 if DATABASE_URL:
     # Si DATABASE_URL está configurada (en producción), úsala para configurar la base de datos
     DATABASES = {'default': dj_database_url.config(default=DATABASE_URL)}
