@@ -33,7 +33,7 @@ DEBUG = os.environ.get('DEBUG') == 'True'
 
 
 if DEBUG:
-    ALLOWED_HOSTS = ['192.168.100.31', 'localhost', '127.0.0.1']
+    ALLOWED_HOSTS = ['192.168.100.31', 'localhost', '127.0.0.1', 'djangoconsultorio-production.up.railway.app']
 else:
     ALLOWED_HOSTS = []
     ENV = os.environ.get('URL')
