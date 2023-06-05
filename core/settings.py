@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 import environ
-import dj_database_url
 env = environ.Env()
 environ.Env.read_env()
 
@@ -26,17 +25,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY = os.environ.get('SECRET_KEY')
+# SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = 'django-insecure-qj0wump$7texvc6@ez$7=^_-3e@-f%6po)20^w%8qnyx3&@yck'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = 'RENDER' not in os.environ
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['192.168.100.31', 'localhost']
 
-RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
-if RENDER_EXTERNAL_HOSTNAME:
+if DEBUG:
+    ALLOWED_HOSTS = ['192.168.100.31', 'localhost', '127.0.0.1']
+else:
     ALLOWED_HOSTS = []
-    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+    ENV = os.environ.get('URL')
+    ALLOWED_HOSTS.append(ENV)
+
 
 
 # Application definition
@@ -91,37 +93,26 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'consultorio',
-#         'USER': 'postgres',
-#         'PASSWORD': '123456',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#     }
-# }
-
-DATABASE_URL = os.getenv('DATABASE_URL')
-
-if DATABASE_URL:
-    # Si DATABASE_URL está configurada (en producción), úsala para configurar la base de datos
-    DATABASES = {'default': dj_database_url.config(default=DATABASE_URL)}
-else:
-    # Si DATABASE_URL no está configurada (en desarrollo), usa SQLite
+if not DEBUG:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': os.getenv('DB_NAME'),
+            'USER': os.getenv('DB_USER'),
+            'PASSWORD': os.getenv('DB_PASSWORD'),
+            'HOST': os.getenv('DB_HOST'),
+            'PORT': os.getenv('DB_PORT'),
         }
     }
+else:
+    
+    DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.sqlite3',
+                'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+            }
+        }
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -159,14 +150,14 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
-if not DEBUG:
-    # Tell Django to copy statics to the `staticfiles` directory
-    # in your application directory on Render.
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# if DEBUG:
+#     # Tell Django to copy statics to the `staticfiles` directory
+#     # in your application directory on Render.
+#     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-    # Turn on WhiteNoise storage backend that takes care of compressing static files
-    # and creating unique names for each version so they can safely be cached forever.
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+#     # Turn on WhiteNoise storage backend that takes care of compressing static files
+#     # and creating unique names for each version so they can safely be cached forever.
+#     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
