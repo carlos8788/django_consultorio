@@ -33,7 +33,7 @@ DEBUG = os.environ.get('DEBUG') == 'True'
 
 ENV = os.environ.get('URL')
 if DEBUG:
-    ALLOWED_HOSTS = ['192.168.100.31', 'localhost', '127.0.0.1', 'djangoconsultorio-production.up.railway.app']
+    ALLOWED_HOSTS = [ENV, 'localhost', '127.0.0.1', 'djangoconsultorio-production.up.railway.app']
 else:
     ALLOWED_HOSTS = []
     
@@ -164,5 +164,5 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-print(ENV)
-CSRF_TRUSTED_ORIGINS = [ENV, 'djangoconsultorio-production.up.railway.app']
+ORIGIN = os.environ.get('ORIGIN')
+CSRF_TRUSTED_ORIGINS = [ORIGIN]
