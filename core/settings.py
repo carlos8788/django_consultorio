@@ -31,12 +31,12 @@ SECRET_KEY = 'django-insecure-qj0wump$7texvc6@ez$7=^_-3e@-f%6po)20^w%8qnyx3&@yck
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG') == 'True'
 
-
+ENV = os.environ.get('URL')
 if DEBUG:
     ALLOWED_HOSTS = ['192.168.100.31', 'localhost', '127.0.0.1', 'djangoconsultorio-production.up.railway.app']
 else:
     ALLOWED_HOSTS = []
-    ENV = os.environ.get('URL')
+    
     ALLOWED_HOSTS.append(ENV)
 
 
@@ -164,3 +164,5 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CSRF_TRUSTED_ORIGINS = [ENV]
