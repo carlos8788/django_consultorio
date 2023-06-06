@@ -25,18 +25,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-# SECRET_KEY = os.getenv('SECRET_KEY')
-SECRET_KEY = 'django-insecure-qj0wump$7texvc6@ez$7=^_-3e@-f%6po)20^w%8qnyx3&@yck'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = os.environ.get('DEBUG') == 'True'
-DEBUG = True
+DEBUG = os.environ.get('DEBUG') == 'True'
+# DEBUG = True
 ENV = os.environ.get('URL')
 if DEBUG:
-    ALLOWED_HOSTS = [ENV, 'localhost', '127.0.0.1', 'djangoconsultorio-production.up.railway.app']
+    ALLOWED_HOSTS = [ENV, 'localhost', '127.0.0.1',]
 else:
     ALLOWED_HOSTS = []
-    
     ALLOWED_HOSTS.append(ENV)
 
 
@@ -50,13 +48,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # "django_browser_reload",
     "apps.home",
     "apps.paciente",
     'apps.obra_sociales',
         
 ]
 
+if DEBUG:
+    INSTALLED_APPS += ["django_browser_reload"]
+print(INSTALLED_APPS)
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -66,8 +66,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
+if DEBUG:
+    MIDDLEWARE.append("django_browser_reload.middleware.BrowserReloadMiddleware")
 
 ROOT_URLCONF = 'core.urls'
 
@@ -94,8 +95,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 
-# if not DEBUG:
-if DEBUG:
+if not DEBUG:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
@@ -152,13 +152,6 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
-# if DEBUG:
-#     # Tell Django to copy statics to the `staticfiles` directory
-#     # in your application directory on Render.
-#     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-#     # Turn on WhiteNoise storage backend that takes care of compressing static files
-#     # and creating unique names for each version so they can safely be cached forever.
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
@@ -167,3 +160,6 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ORIGIN = os.environ.get('ORIGIN')
 CSRF_TRUSTED_ORIGINS = [ORIGIN]
+
+SESSION_COOKIE_AGE = 1800 # duración de la sesión en segundos
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True # la sesión se cierra cuando el usuario cierra el navegador

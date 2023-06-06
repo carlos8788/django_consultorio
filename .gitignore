@@ -3,3 +3,4 @@ env
 build.sh
 all.json
 db.sqlite3
+data.sql

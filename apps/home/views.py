@@ -15,11 +15,10 @@ def logout_view(request):
     return redirect('login')
 
 def login_view(request):
-    # print('Login')
-    # print(request.method)
+
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
-        # print(form)
+
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')

@@ -22,6 +22,6 @@ urlpatterns = [
     path('', include('apps.home.urls')),
     path('turnos/', include('apps.paciente.urls')),
     path('obraSocial/', include('apps.obra_sociales.urls')),
-    # path("__reload__/", include("django_browser_reload.urls")),
+    path("__reload__/", include("django_browser_reload.urls")),
     
 ]
