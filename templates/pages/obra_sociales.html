@@ -23,7 +23,7 @@
                 <td>
                     {% if obra_social.estado == "Activo" %}
                     <span class="text-success">{{ obra_social.estado }}</span>
-                    {% elif obra_social.estado == "Suspendido" %}
+                    {% else %}
                     <span class="text-danger">{{ obra_social.estado }}</span>
                     {% endif %}
                 </td>
