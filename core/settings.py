@@ -29,8 +29,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-qj0wump$7texvc6@ez$7=^_-3e@-f%6po)20^w%8qnyx3&@yck'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG') == 'True'
-
+# DEBUG = os.environ.get('DEBUG') == 'True'
+DEBUG = True
 ENV = os.environ.get('URL')
 if DEBUG:
     ALLOWED_HOSTS = [ENV, 'localhost', '127.0.0.1', 'djangoconsultorio-production.up.railway.app']
@@ -94,7 +94,8 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 
-if not DEBUG:
+# if not DEBUG:
+if DEBUG:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
