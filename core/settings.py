@@ -56,7 +56,7 @@ INSTALLED_APPS = [
 
 if DEBUG:
     INSTALLED_APPS += ["django_browser_reload"]
-print(INSTALLED_APPS)
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',

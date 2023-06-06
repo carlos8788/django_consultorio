@@ -3,8 +3,8 @@ from django.db import models
 # Create your models here.
 class ObraSocial(models.Model):
     ESTADO_CHOICES = [
-        ('ACT', 'Activo'),
-        ('SUS', 'Suspendido'),
+        ('Activo', 'Activo'),
+        ('Suspendido', 'Suspendido'),
     ]
     nombre = models.CharField(max_length=100)
     direccion = models.CharField(max_length=250)
