@@ -161,10 +161,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ORIGIN = os.environ.get('ORIGIN')
 CSRF_TRUSTED_ORIGINS = [ORIGIN]
 
-# SESSION_COOKIE_AGE = 1800 # duración de la sesión en segundos
-# SESSION_EXPIRE_AT_BROWSER_CLOSE = True # la sesión se cierra cuando el usuario cierra el navegador
+SESSION_COOKIE_AGE = 1800 # duración de la sesión en segundos
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True # la sesión se cierra cuando el usuario cierra el navegador
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 
 # Para cuando alguien quiera entrar y no está logueado utilizamos 
 LOGIN_URL = 'login'
-print('http://localhost:8000')
+if DEBUG:
+    print('http://localhost:8000')
