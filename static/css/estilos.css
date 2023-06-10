@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Didact+Gothic&family=Lobster&family=Satisfy&display=swap');
+
+:root {
+  --font-didact: 'Didact Gothic', sans-serif;
+  --font-lobster: 'Lobster', cursive;
+  --font-satisfy: 'Satisfy', cursive;
+}
+
+.hero__img {
+  width: 500px;
+  height: 500px;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 4px 8px 8px rgba(241, 51, 216, 0.3);
+}
+
+.hero__title {
+  margin: 2rem auto;
+  font-family: var(--font-satisfy);
+  font-size: 4rem;
+  font-weight: normal;
+
+}
+
+.boton__whatsapp {
+  text-decoration: none;
+  font-weight: bold;
+  background-color: #1BD741;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 1.5rem;
+  transition: .6s;
+}
+
+.boton__whatsapp:hover {
+  background-color: #78C2AD;
+  color: aliceblue;
+}
+
+@media (max-width: 1150px) {
+  .hero__img {
+    width: 300px;
+    height: 300px;
+  }
+
+  .hero__title {
+    font-size: 3.5rem;
+  }
+}

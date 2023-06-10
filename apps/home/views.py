@@ -12,7 +12,7 @@ def index(request):
 
 def logout_view(request):
     logout(request)
-    return redirect('login')
+    return redirect('home')
 
 def login_view(request):
 
@@ -31,3 +31,6 @@ def login_view(request):
         form = AuthenticationForm()
     
     return render(request, 'pages/login.html', {'form': form})
+
+def services_view(request):
+    return render(request, 'pages/services.html')

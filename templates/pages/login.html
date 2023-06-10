@@ -2,11 +2,17 @@
 {% load static %}
 {% block contenedor %}
 <h1>Login</h1>
-<form class="formulario" method="POST">
-    {% csrf_token %}
-    <div class="formulario--body">
-        {{form.as_p}}
-        <button href="" class="formulario--btn">Iniciar sesión</button>
-    </div>
-</form>
+<div class="container d-flex justify-content-center">
+    <form class=" m-5 p-5 form-group" method="POST">
+        {% csrf_token %}
+        <div class="">
+            {{form.as_p}}
+            <button href="" class="formulario--btn">Iniciar sesión</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
+{% block script %}
+<script src="{% static 'assets/js/formLogin.js' %}"></script>
 {% endblock %}
