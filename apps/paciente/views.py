@@ -7,7 +7,7 @@ from .tests import *
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 import json
-
+import traceback
 def format_data(data):
     pacientes_list = []
     for turno in data:
@@ -64,8 +64,9 @@ def turnos(request):
         fechas = Fecha.objects.all()
 
         return render(request,'pages/mostrar_turnos.html', {'pacientes': pacientes, 'fechas': fechas})
-    except:
-        return JsonResponse({'error':'error 500'}, status=500)
+    except Exception as e:
+        error_message = traceback.format_exc()
+        return JsonResponse({'error':error_message}, status=500)
 
 @login_required
 def filtrar_fecha(request):
