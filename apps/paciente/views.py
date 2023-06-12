@@ -5,6 +5,29 @@ from django.shortcuts import render, redirect
 from .forms import PacienteForm
 from .tests import *
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+import json
+
+def format_data(data):
+    pacientes_list = []
+    for turno in data:
+        # print(turno, 'turno')
+        paciente_db = Paciente.objects.get(id=turno['paciente_id']).get_paciente()
+        hora = Hora.objects.get(id=turno['hora_id'])
+        fecha = Fecha.objects.get(id=turno['fecha_id'])
+        paciente_db['hora'] = hora
+        paciente_db['fecha'] = format_fecha(str(fecha))
+        paciente_db['diagnostico'] = turno['diagnostico']
+        paciente_db['id_turno'] = turno['id']
+        
+        pacientes_list.append(paciente_db)
+         
+    return pacientes_list
+
+def format_fecha(data_fecha):
+    fecha_recibida = data_fecha.split('-')
+    return f'{fecha_recibida[2]}-{fecha_recibida[1]}-{fecha_recibida[0][2:]}'
+
 
 def cargar_datos(request):
     # datos()
@@ -33,44 +56,32 @@ def cargar_datos(request):
 
     return render(request, 'pages/turnos.html', {'form': form})
 
-
-
-# Create your views here.
 @login_required
 def turnos(request):
     # filtro = date(2023, 5, 18)
     turnos = Turno.objects.all().values()
-    pacientes = []
-    for turno in turnos:
-        # print(turno)
-        paciente = Paciente.objects.get(id=turno['paciente_id']).get_paciente()
-        hora = Hora.objects.get(id=turno['hora_id'])
-        fecha = Fecha.objects.get(id=turno['fecha_id'])
-        paciente['hora'] = hora
-        paciente['fecha'] = fecha
-        paciente['id_turno'] = turno['id']
-        # print(paciente)
-        pacientes.append(paciente)
-         # print(turno.paciente, turno.fecha, turno.hora, turno.diagnostico)
+    # print(turnos)
+    pacientes = format_data(turnos)
 
     fechas = Fecha.objects.all()
-    # print(pacientes)
+
     return render(request,'pages/mostrar_turnos.html', {'pacientes': pacientes, 'fechas': fechas})
 
 @login_required
 def filtrar_fecha(request):
-    # Obtener la fecha de la solicitud
+
     fecha_busqueda = request.GET.get('fecha_busqueda')
-    print(fecha_busqueda)
-    # Convertir la cadena de fecha en un objeto datetime.date
+
     fecha_busqueda = datetime.strptime(fecha_busqueda, "%Y-%m-%d").date()
-    # Filtrar los pacientes por la fecha
-    pacientes = Paciente.objects.filter(fecha__fecha=fecha_busqueda)
+
+    fecha = Fecha.objects.get(fecha=fecha_busqueda)
+    turnos = Turno.objects.filter(fecha=fecha).values()
+    pacientes = format_data(turnos)
     fechas = Fecha.objects.all()
-    # Renderizar una plantilla con los pacientes filtrados
-    print(fechas)
+
     return render(request,'pages/mostrar_turnos.html', {'pacientes': pacientes, 'fechas': fechas})
 
+@login_required
 def paciente(request):
     if request.method == 'POST':
         pass
@@ -84,15 +95,16 @@ def paciente(request):
             paciente = Paciente.objects.get(dni=dni_input)
         else:
             paciente = Paciente.objects.get(dni=dni_select)
-        print(paciente)
+        
         turnos = paciente.turnos_paciente.all()  # Accede a todos los turnos del paciente
-
+        
         for i in turnos:
             i = str(i).split(',')
             turno_dict = {}
             turno_dict['nombre'] = i[0]
-            turno_dict['fecha'] = i[1]
+            turno_dict['fecha'] = format_fecha(i[1])
             turno_dict['hora'] = i[2]
+            turno_dict['id_turno'] = i[3]
             turnos_list.append(turno_dict)
             
     except Paciente.DoesNotExist :
@@ -101,3 +113,36 @@ def paciente(request):
         # Manejar el error específico de ValueError aquí
         paciente = None
     return render(request, 'pages/paciente.html',{'paciente':paciente,'turnos': turnos_list, 'dnis': dnis})
+
+
+@login_required
+def diagnostico(request, id):
+    
+    if request.method == 'POST':
+
+        body_unicode = request.body.decode('utf-8')
+        data = json.loads(body_unicode)
+
+        turno = Turno.objects.get(id=id)
+        turno.diagnostico = data['diagnostico']
+        turno.save()
+
+        return JsonResponse({'message': 'Diagnóstico recibido'}, status=200)
+    else:
+        turno = Turno.objects.get(id=int(id)).get_id_diag_pac()
+        paciente = Paciente.objects.get(id=turno['paciente']).get_paciente()
+        # print(turno, 'TURNO_ID')
+        # print(paciente)
+        json_turno = {
+            'id':turno['id'],
+            'nombre': paciente['nombre'],
+            'apellido': paciente['apellido'],
+            'obra_social': str(paciente['obra_social']),
+            'dni': paciente['dni'],
+            'observaciones': paciente['observaciones'],
+            'diagnostico': turno['diagnostico']
+        }
+        # return redirect('mostrar_turnos')
+        return JsonResponse({'turno': json_turno}, status=200)
+    
+

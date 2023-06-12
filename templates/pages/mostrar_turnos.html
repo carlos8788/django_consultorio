@@ -3,14 +3,16 @@
 {% block contenedor %}
 <div class="container vh-100 mt-5 p-4">
     <div class="content-container max-height-1500">
-        <div class="d-flex justify-content-end my-4">
+        
+        <div class="d-flex justify-content-center my-4">
             <form method="GET" action="{% url 'filtrar_fecha' %}" class="d-flex">
+                
                 <select class="form-select col-2" name="fecha_busqueda">
                     {% for fecha in fechas %}
                     <option value="{{ fecha }}">{{ fecha }}</option>
                     {% endfor %}
                 </select>
-                <input class="btn btn-secondary ms-2" type="submit" value="Filtrar">
+                <input class="btn ms-2" style="background-color: #F3268C; color: white;" type="submit" value="Filtrar">
             </form>
         </div>
 
@@ -18,40 +20,41 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Apellido</th>
-                        <th scope="col">DNI</th>
-                        <th scope="col">Teléfono</th>
-                        <th scope="col">Obra Social</th>
-                        <th scope="col">Observaciones</th>
-                        <th scope="col">Fecha</th>
-                        <th scope="col">Hora</th>
+                        <th class="d-none d-lg-table-cell text-center" scope="col">#</th>
+                        <th class=" text-center" scope="col">Nombre</th>
+                        <th class=" text-center" scope="col">Apellido</th>
+                        <th class="d-none d-md-table-cell text-center" scope="col">DNI</th>
+                        <th class="d-none d-md-table-cell text-center" scope="col">Teléfono</th>
+                        <th class="d-none d-md-table-cell text-center" scope="col">Obra Social</th>
+                        <th class="text-center" scope="col">Ficha</th>
+                        <th class=" text-center" scope="col">Fecha</th>
+                        <th class=" text-center" scope="col">Hora</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="body_table">
                     {% for paciente in pacientes %}
 
-                    <tr>
-                        <th scope="row">{{ forloop.counter }}</th>
-                        <td>{{ paciente.nombre }}</td>
-                        <td>{{ paciente.apellido }}</td>
-                        <td>{{ paciente.dni }}</td>
-                        <td>{{ paciente.celular }}</td>
-                        <td class="text-center">{{ paciente.obra_social }}</td>
-                        <td ><a href="#" id="{{paciente.id_turno}}_turno" onclick="alert(id)">Ver diagnostico</a></td>
-                        <td>{{ paciente.fecha }}</td>
-                        <td>{{ paciente.hora }}</td>
+                    <tr id="{{paciente.id_turno}}" >
+                        <th scope="row" class="d-none d-lg-table-cell text-center">{{ forloop.counter }}</th>
+                        <td class=" text-center">{{ paciente.nombre }}</td>
+                        <td class=" text-center">{{ paciente.apellido }}</td>
+                        <td class="d-none d-md-table-cell text-center">{{ paciente.dni }}</td>
+                        <td class="d-none d-md-table-cell text-center">{{ paciente.celular }}</td>
+                        <td class="text-center d-none d-md-table-cell text-center">{{ paciente.obra_social }}</td>
+                        <td class=" text-center"><a href="#" id="{{paciente.id_turno}}" data-toggle="modal" data-target="#myModal" >Ver</a></td>
+                        <td class=" text-center">{{ paciente.fecha }}</td>
+                        <td class=" text-center">{{ paciente.hora }}</td>
                     </tr>
-                    <div class="modal" id="modalPaciente{{ paciente.id }}" tabindex="-1" role="dialog">
-                        <h1>hola</h1>
-                    </div>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+
+
+{% include "components/modal_pacientes.html" %}
+
 
 {% endblock %}
 

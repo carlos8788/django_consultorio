@@ -2,12 +2,13 @@
 {% load static %}
 {% block contenedor %}
 <h1>Login</h1>
-<div class="container d-flex justify-content-center">
-    <form class=" m-5 p-5 form-group" method="POST">
+<div class="container d-flex justify-content-center ">
+    <form class=" m-5 p-5 form-group d-flex justify-content-center" method="POST">
         {% csrf_token %}
         <div class="">
             {{form.as_p}}
-            <button href="" class="formulario--btn">Iniciar sesión</button>
+            <button id="btn-form" class="btn" style="background-color: #F3268C; color: white;">Iniciar sesión</button>
+            
         </div>
     </form>
 </div>

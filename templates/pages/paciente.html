@@ -3,7 +3,7 @@
 {% block contenedor %}
 
 
-<div class="container">
+<div class="container my-5 py-5 vh-100">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <form method="GET" action="{% url 'paciente' %}">
@@ -33,14 +33,19 @@
     <table class="table table-striped">
         <thead>
             <tr class="bg-info text-white">
+                <th class="">#</th>
                 <th class="text-center">Fecha</th>
                 <th class="text-center">Hora</th>
+                <th class="text-center">Ficha</th>
+
             </tr>
         </thead>
-        <tbody>
+        <tbody id="body_table">
 
             {% for turno in turnos %}
             <tr>
+                <th class="">{{ forloop.counter }}</th>
+                <td class="text-center"><a href="#" id="{{ turno.id_turno }}" data-toggle="modal" data-target="#myModal" >Ver</a></td>
                 <td class="text-center">{{ turno.fecha }}</td>
                 <td class="text-center">{{ turno.hora }}</td>
             </tr>
@@ -48,7 +53,9 @@
         </tbody>
     </table>
 </div>
+{% include "components/modal_pacientes.html" %}
+{% endblock %}
 
-
-
+{% block script %}
+<script src="{% static 'assets/js/modalTurnos.js' %}"></script>
 {% endblock %}

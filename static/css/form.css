@@ -20,6 +20,7 @@
     background-color: rgb(240, 199, 238);
     font-size: larger;
     color: rgb(55, 85, 43);
+    /* color: rgba(0, 51, 160, 1); */
     border: none;
     border-radius: 1rem;
 }
@@ -27,3 +28,4 @@
     background-color: rgb(243, 160, 239);
     color: white;
 }
+

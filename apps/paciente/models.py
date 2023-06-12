@@ -60,6 +60,19 @@ class Turno(models.Model):
     fecha = models.ForeignKey(Fecha, on_delete=models.CASCADE, related_name='turnos_fecha')
     hora = models.ForeignKey(Hora, on_delete=models.CASCADE, blank=False, related_name='turnos_hora')
     diagnostico = models.TextField(blank=True, default='')
+
     def __str__(self):
         simp_hora = str(self.hora.hora)[0:-3]
-        return f'{self.paciente.nombre} {self.paciente.apellido},{self.fecha.fecha},{simp_hora}'
+        return f'{self.paciente.nombre} {self.paciente.apellido},{self.fecha.fecha},{simp_hora}, {self.id}'
+    def get_diagnostico(self):
+        return self.diagnostico
+    def get_id(self):
+        print(self.id)
+        return self.id
+    
+    def get_id_diag_pac(self):
+        return {
+            'id': self.id,
+            'paciente': self.paciente.id,
+            'diagnostico': self.diagnostico
+        }

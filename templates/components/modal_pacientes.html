@@ -1,0 +1,21 @@
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+      <div class="modal-content">
+  
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitle"></h5>
+        </div>
+  
+        <div class="modal-body">
+          <p id="dataPaciente" class=""></p>
+          <textarea name="" id="diagnostico" cols="50" rows="10" style="resize: none;"></textarea>
+        </div>
+  
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary text-white" data-dismiss="modal" id="close">Cerrar</button>
+          <button type="button" id="save" class="btn text-white" style="background-color: #F3268C;">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>

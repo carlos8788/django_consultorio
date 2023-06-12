@@ -170,3 +170,4 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 LOGIN_URL = 'login'
 if DEBUG:
     print('http://localhost:8000')
+X_FRAME_OPTIONS = 'SAMEORIGIN'
