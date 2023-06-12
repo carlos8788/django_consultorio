@@ -40,7 +40,7 @@ Array.from(bodyTable.children).forEach(element => {
                         dataPaciente.innerHTML = `<strong>DNI:</strong> ${data.turno.dni} 
                                                 <strong>O. Social:</strong> ${data.turno.obra_social}`
                         diagnostico.value = data.turno.diagnostico
-                    });
+                    }).catch((error) => console.log(error));
 
                 const targetModal = element_2.children.item(0).getAttribute("data-target");
                 modal = document.querySelector(targetModal);
