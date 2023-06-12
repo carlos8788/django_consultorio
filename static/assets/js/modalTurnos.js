@@ -19,15 +19,21 @@ let urlPost = ''
 let modal;
 Array.from(bodyTable.children).forEach(element => {
     Array.from(element.children).forEach(element_2 => {
-        
+
         if (element_2.children.length > 0) {
             element_2.children.item(0).addEventListener('click', (e) => {
-                
+
                 e.preventDefault();
                 let url = `diagnostico/${element_2.children.item(0).id.trim()}`
                 urlPost = url
-                
-                fetch(url)
+
+                fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken
+                    }
+                })
                     .then(response => response.json())
                     .then(data => {
                         modalTitle.textContent = `${data.turno.nombre} ${data.turno.apellido}`
@@ -43,7 +49,7 @@ Array.from(bodyTable.children).forEach(element => {
                     modal.style.display = "block";
                     modal.setAttribute("aria-modal", "true");
                     modal.removeAttribute("aria-hidden");
-                    
+
                     btnClose.addEventListener('click', () => btnCloseFunction(modal))
                 }
             });
@@ -54,7 +60,7 @@ Array.from(bodyTable.children).forEach(element => {
 
 
 btnSave.addEventListener('click', () => {
-    
+
     fetch(urlPost, {
         method: 'POST',
         headers: {
@@ -68,7 +74,7 @@ btnSave.addEventListener('click', () => {
         .then(response => response.json())
         .then(data => {
             alert(data.message)
-            })
+        })
         .catch(error => {
             console.log(error)
         });
