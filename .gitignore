@@ -3,5 +3,6 @@ env
 build.sh
 all.json
 db.sqlite3
+db copy.sqlite3
 data.sql
 migra
