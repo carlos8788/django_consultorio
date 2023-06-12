@@ -57,15 +57,15 @@ def cargar_datos(request):
     return render(request, 'pages/turnos.html', {'form': form})
 
 @login_required
-def turnos(request):
-    # filtro = date(2023, 5, 18)
-    turnos = Turno.objects.all().values()
-    # print(turnos)
-    pacientes = format_data(turnos)
+def turnos(request):  
+    try:
+        turnos = Turno.objects.all().values()
+        pacientes = format_data(turnos)
+        fechas = Fecha.objects.all()
 
-    fechas = Fecha.objects.all()
-
-    return render(request,'pages/mostrar_turnos.html', {'pacientes': pacientes, 'fechas': fechas})
+        return render(request,'pages/mostrar_turnos.html', {'pacientes': pacientes, 'fechas': fechas})
+    except:
+        return JsonResponse({'error':'error 500'}, status=500)
 
 @login_required
 def filtrar_fecha(request):
