@@ -8,6 +8,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 import json
 import traceback
+from django.core.paginator import Paginator, EmptyPage
+
 def format_data(data):
     pacientes_list = []
     for turno in data:
@@ -83,17 +85,19 @@ def filtrar_fecha(request):
     return render(request,'pages/mostrar_turnos.html', {'pacientes': pacientes, 'fechas': fechas})
 
 @login_required
-def paciente(request):
-    if request.method == 'POST':
-        pass
+def paciente(request, dni=None):
+    
     dni_input = request.GET.get('dni_input', 'dni_input')
     dni_select = request.GET.get('dni_select', 'dni_select')
     dnis = Paciente.objects.values_list('dni', flat=True)
     turnos_list = []
     
     try:
-        if dni_input:
+        if dni:
+            paciente = Paciente.objects.get(dni=int(dni))
+        elif dni_input:
             paciente = Paciente.objects.get(dni=dni_input)
+            print(paciente)
         else:
             paciente = Paciente.objects.get(dni=dni_select)
         
@@ -146,4 +150,18 @@ def diagnostico(request, id):
         # return redirect('mostrar_turnos')
         return JsonResponse({'turno': json_turno}, status=200)
     
+@login_required
+def all_pacientes(request):
+    numero_pagina = request.GET.get('page', 1)
 
+    pacientes = Paciente.objects.all()
+    pacientes = [p.get_paciente() for p in pacientes]
+
+    paginator = Paginator(pacientes, 20)
+
+    try:
+        pagina_actual = paginator.page(numero_pagina)
+    except EmptyPage:
+        pagina_actual = paginator.page(1)  # Si el número de página está fuera de rango, muestra la primera página
+
+    return render(request, 'pages/pacientes.html', {'pagina': pagina_actual})

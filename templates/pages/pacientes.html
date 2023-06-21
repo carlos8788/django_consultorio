@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block contenedor %}
+
+<div class="my-5 p-5">
+    <div class="mb-5 d-flex justify-content-between">
+        <h1>Todos los pacientes</h1>
+        <!-- <div>
+            <label for="">Buscar paciente: <span> </span></label>
+            <input type="text">
+        </div> -->
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr class="bg-info text-white">
+                <th class="">#</th>
+                <th class="text-center">Nombre completo</th>
+                <th class="text-center">DNI</th>
+                <th class="text-center">Obra Social</th>
+                <th class="text-center">Celular</th>
+
+            </tr>
+        </thead>
+        <tbody id="body_table">
+
+            {% for p in pagina %}
+            <tr>
+                <th class="">{{ forloop.counter }}</th>
+                <td class="text-center"><a href="{% url 'paciente_dni_select' dni=p.dni %}" >{{ p.nombre }} {{ p.apellido }}</a></td>
+                <td class="text-center">{{ p.dni }}</td>
+                <td class="text-center">{{ p.obra_social }}</td>
+                <td class="text-center">{{ p.celular }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="pagination container d-flex justify-content-center">
+        <span class="step-links">
+            {% if pagina.has_previous %}
+                <a href="?page={{ pagina.previous_page_number }} " class="btn" style="background-color: #F3268C; color: white;">anterior</a>
+            {% endif %}
+    
+            <span class="current-page btn btn-secondary mx-4">{{ pagina.number }}</span>
+    
+            {% if pagina.has_next %}
+                <a href="?page={{ pagina.next_page_number }}" class="btn" style="background-color: #F3268C; color: white;">siguiente</a>
+            {% endif %}
+        </span>
+    </div>
+</div>
+{% endblock %}

@@ -11,7 +11,8 @@
 
 
         <li><a class="nav-link scrollto"
-            href="{% if request.path != 'index.html' %}{% url 'home' %}{% else %}#{% endif %}">Home</a>
+          {% if request.path != '/' %}href="{% url 'home' %}"{% else %}href="#"{% endif %}>Home</a>
+
         </li>
         <li>
           <a class="nav-link scrollto" href="{% if request.path != 'index.html' %}
@@ -22,19 +23,27 @@
             Acerca de
           </a>
         </li>
-        <li><a class="nav-link scrollto" href="index.html#services">Servicios</a></li>
-        <li><a class="nav-link scrollto" href="index.html#portfolio">Portfolio</a></li>
+        <li><a class="nav-link scrollto" href="{% if request.path != 'index.html' %}
+                                                {% url 'home' %}#portfolio
+                                              {% else %}
+                                              index.html#portfolio
+                                              {% endif %}">Laboratorios</a></li>
 
-        <li><a class="nav-link scrollto" href="index.html#contact">Contacto</a></li>
+        <li><a class="nav-link scrollto" href="{% if request.path != 'index.html' %}
+          {% url 'home' %}#contact
+        {% else %}
+        index.html#contact
+        {% endif %}">Contacto</a></li>
+        <li><a class="nav-link scrollto" href="{% url 'obra_social' %}">Obras sociales</a></li>
 
         {% if user.is_authenticated %}
         <li class="dropdown"><a href="#"><span>Pacientes</span> <i
               class="bi bi-chevron-down dropdown-indicator"></i></a>
           <ul>
-            <li><a href="{% url 'paciente' %}">Ver pacientes</a></li>
+            <li><a href="{% url 'paciente' %}">Buscar paciente</a></li>
             <li><a href="{% url 'mostrar_turnos' %}">Ver turnos</a></li>
-            <li><a href="#">Drop Down 3</a></li>
-            <li><a href="#">Drop Down 4</a></li>
+            <li><a href="{% url 'pacientes' %}">Ver todos</a></li>
+            <!-- <li><a href="#">Obras sociales</a></li> -->
           </ul>
         </li>
         <li>

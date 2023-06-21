@@ -31,7 +31,7 @@ class Paciente(models.Model):
     apellido = models.CharField(max_length=90)
     obra_social = models.ForeignKey(ObraSocial, on_delete=models.DO_NOTHING)
     celular = models.CharField(max_length=12)
-    dni = models.IntegerField()
+    dni = models.IntegerField(unique=True)
     observaciones = models.TextField(blank=True)
     nombre_completo = models.CharField(max_length=200, editable=False, default='')
 
