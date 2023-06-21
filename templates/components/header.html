@@ -1,7 +1,7 @@
 {% load static %}
 <header id="header" class="header fixed-top" data-scrollto-offset="0">
   <div class="container-fluid d-flex align-items-center justify-content-between">
-    <a href="{% if request.path == 'index.html' %}#{% else %}{% url 'home' %}{% endif %}"
+    <a {% if request.path != '/' %}href="{% url 'home' %}"{% else %}href="#"{% endif %}
       class="logo d-flex align-items-center scrollto me-auto me-lg-0">
       <img src="{% static 'img/logo.png' %}" alt="logo" class="ms-5">
     </a>
@@ -43,7 +43,8 @@
             <li><a href="{% url 'paciente' %}">Buscar paciente</a></li>
             <li><a href="{% url 'mostrar_turnos' %}">Ver turnos</a></li>
             <li><a href="{% url 'pacientes' %}">Ver todos</a></li>
-            <li><a href="#">Obras sociales</a></li>
+            <li><a href="#">Agregar Paciente</a></li>
+            <li><a href="#">Agregar Turno</a></li>
           </ul>
         </li>
         <li>

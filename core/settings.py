@@ -29,7 +29,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG') == 'True'
-DEBUG = True
+# DEBUG = True
 ENV = os.environ.get('URL')
 if DEBUG:
     ALLOWED_HOSTS = [ENV, 'localhost', '127.0.0.1',]
@@ -54,8 +54,8 @@ INSTALLED_APPS = [
         
 ]
 
-# if DEBUG:
-#     INSTALLED_APPS += ["django_browser_reload"]
+if DEBUG:
+    INSTALLED_APPS += ["django_browser_reload"]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -67,8 +67,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-# if DEBUG:
-#     MIDDLEWARE.append("django_browser_reload.middleware.BrowserReloadMiddleware")
+if DEBUG:
+    MIDDLEWARE.append("django_browser_reload.middleware.BrowserReloadMiddleware")
 
 ROOT_URLCONF = 'core.urls'
 
@@ -95,8 +95,8 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 
-# if not DEBUG:
-if DEBUG:
+if not DEBUG:
+# if DEBUG:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
