@@ -1,13 +1,20 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
 
 
 # Create your views here.
 def index(request):
-    context = {}
-    context['user'] = request.user
-    return render(request, 'pages/index.html', context)
+    try:
+        context = {}
+        context['user'] = request.user
+        return render(request, 'pages/index.html', context)
+    except Exception as e:
+        print(e)
+        error_message = str(e)
+        return JsonResponse({'error': error_message}, status=500)
+
 
 
 def logout_view(request):
