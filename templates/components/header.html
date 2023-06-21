@@ -34,7 +34,7 @@
         {% else %}
         index.html#contact
         {% endif %}">Contacto</a></li>
-        <li><a class="nav-link scrollto" href="{% url 'obra_social' %}">Obras sociales</a></li>
+        <li><a class="nav-link" href="{% url 'obra_social' %}">Obras sociales</a></li>
 
         {% if user.is_authenticated %}
         <li class="dropdown"><a href="#"><span>Pacientes</span> <i
@@ -43,7 +43,7 @@
             <li><a href="{% url 'paciente' %}">Buscar paciente</a></li>
             <li><a href="{% url 'mostrar_turnos' %}">Ver turnos</a></li>
             <li><a href="{% url 'pacientes' %}">Ver todos</a></li>
-            <!-- <li><a href="#">Obras sociales</a></li> -->
+            <li><a href="#">Obras sociales</a></li>
           </ul>
         </li>
         <li>

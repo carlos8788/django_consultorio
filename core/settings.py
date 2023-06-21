@@ -29,7 +29,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG') == 'True'
-# DEBUG = True
+# DEBUG = False
 ENV = os.environ.get('URL')
 if DEBUG:
     ALLOWED_HOSTS = [ENV, 'localhost', '127.0.0.1',]
@@ -96,6 +96,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 
 if not DEBUG:
+# if DEBUG:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
