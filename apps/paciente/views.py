@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import JsonResponse
 from django.core.paginator import Paginator, EmptyPage
+from django.db.models import Q
 
 from .models import Paciente, Fecha, Turno, Hora
 from .forms import PacienteForm
@@ -189,3 +190,13 @@ def dar_turnos(request):
 @login_required
 def page_buscar_paciente(request):
     return render(request, 'pages/buscar_paciente.html')
+
+@login_required
+def buscar_paciente_nombre(request, cadena):
+    print(cadena)
+    print(Paciente.objects.filter(Q(nombre__icontains=cadena)))
+    pacientes = list(Paciente.objects.filter(Q(nombre__icontains=cadena)).values())
+    print(pacientes)
+    if not pacientes:
+        return JsonResponse({'error': 'No se encontraron pacientes'}, status=404)
+    return JsonResponse(pacientes, safe=False)
