@@ -2,7 +2,7 @@
 {% load static %}
 {% block contenedor %}
 
-<div class="my-5 p-5">
+<div class="container my-5 mx-auto">
     <div class="mb-5 d-flex justify-content-between">
         <h1>Todos los pacientes</h1>
         <!-- <div>
@@ -34,7 +34,7 @@
             {% endfor %}
         </tbody>
     </table>
-    <div class="pagination container d-flex justify-content-center">
+    <div class="pagination d-flex justify-content-center">
         <span class="step-links">
             {% if pagina.has_previous %}
                 <a href="?page={{ pagina.previous_page_number }} " class="btn" style="background-color: #F3268C; color: white;">anterior</a>
