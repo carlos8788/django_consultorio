@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block contenedor %}
+<div class="container d-flex flex-column align-items-center gap-4">
+    
+    <h1 class="mt-5 pt-5 title__page text-center">Dar turnos</h1>
+    <div class="">
+        <label for="inputPaciente" class="title__page">Ingrese Nombre completo del paciente:</label>
+        <input type="text" id="inputPaciente" class="form-label">
+        <!-- <button class="btn btn__extra" id="btnCel">Buscar</button> -->
+    </div>
+    
+    <table class="table table-striped">
+        <thead>
+            <tr class="bg-info text-white">
+                <th class="">#</th>
+                <th class="text-center">Nombre completo</th>
+                <th class="text-center">DNI</th>
+                <th class="text-center">Obra social</th>
+                <th class="text-center">Celular</th>
+
+            </tr>
+        </thead>
+        <tbody id="body_table">
+        </tbody>
+    </table>
+     
+    <div class="" id="sinResultados"></div>
+
+</div>
+
+
+<script src="{% static 'js/turnos.js' %} "></script>
+
+{% endblock %}

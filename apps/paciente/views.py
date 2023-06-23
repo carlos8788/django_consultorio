@@ -1,14 +1,16 @@
 from django.shortcuts import render
-from .models import Paciente, Fecha, Turno
-from datetime import date, datetime
 from django.shortcuts import render, redirect
-from .forms import PacienteForm
-from .tests import *
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import JsonResponse
+from django.core.paginator import Paginator, EmptyPage
+
+from .models import Paciente, Fecha, Turno, Hora
+from .forms import PacienteForm
+
+from datetime import datetime
+import os
 import json
 import traceback
-from django.core.paginator import Paginator, EmptyPage
 
 def format_data(data):
     pacientes_list = []
@@ -165,3 +167,25 @@ def all_pacientes(request):
         pagina_actual = paginator.page(1)  # Si el número de página está fuera de rango, muestra la primera página
 
     return render(request, 'pages/pacientes.html', {'pagina': pagina_actual})
+
+def is_allowed_url(request):
+    allowed_url = os.environ.get('URL')
+    allowed_url += '/dar_turno'  # Reemplaza con la URL permitida
+    print(allowed_url)
+    return request.path == allowed_url
+
+
+# @user_passes_test(is_allowed_url)
+@login_required
+def dar_turnos(request):
+    pacientes = Paciente.objects.all()
+    pacientes = [p.get_paciente() for p in pacientes]
+    def serializer_obra_social(paciente):
+        paciente['obra_social'] = paciente['obra_social'].to_json()
+        return paciente
+    pacientes = [serializer_obra_social(pac) for pac in pacientes]
+    
+    return JsonResponse({'pacientes': pacientes}, status=200)
+@login_required
+def page_buscar_paciente(request):
+    return render(request, 'pages/buscar_paciente.html')

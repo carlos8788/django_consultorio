@@ -13,7 +13,7 @@
     <table class="table table-striped">
         <thead>
             <tr class="bg-info text-white">
-                <th class="">#</th>
+                <th class="d-none d-md-table-cell text-center">#</th>
                 <th class="text-center">Nombre completo</th>
                 <th class="text-center">DNI</th>
                 <th class="text-center">Obra Social</th>
@@ -25,7 +25,7 @@
 
             {% for p in pagina %}
             <tr>
-                <th class="">{{ forloop.counter }}</th>
+                <th class="d-none d-md-table-cell text-center">{{ forloop.counter }}</th>
                 <td class="text-center"><a href="{% url 'paciente_dni_select' dni=p.dni %}" >{{ p.nombre }} {{ p.apellido }}</a></td>
                 <td class="text-center">{{ p.dni }}</td>
                 <td class="text-center">{{ p.obra_social }}</td>

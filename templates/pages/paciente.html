@@ -4,31 +4,17 @@
 
 
 <div class="container my-5 py-5 vh-100">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <form method="GET" action="{% url 'paciente' %}">
-                <div class="form-group">
-                    <label for="dni_select">Seleccionar:</label>
-                    <select class="form-select" id="dni_select" name="dni_select">
-                        {% for dni in dnis %}
-                        <option value="{{ dni }}">{{ dni }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="dni_input">Introducir:</label>
-                    <input type="text" class="form-control" id="dni_input" name="dni_input"
-                        placeholder="Introduzca un nuevo DNI">
-                </div>
-                <button type="submit" class="btn btn-secondary my-4">Filtrar</button>
-            </form>
-        </div>
+    <div class="section-header">
+        <h2 class="title__page">{{ paciente }}</h2>
+        <h3 class="title__page">DNI: {{paciente.dni}}</h3>
+
     </div>
-    {% if paciente == None %}
-    <h2>Paciente no encontrado, intente de nuevo</h2>
-    {% else %}
-    <h2>{{paciente}}</h2>
-    {% endif %}
+    <div class="d-flex justify-content-center gap-4 mb-5">
+        <a href="" class="btn btn__extra" >Nuevo turno</a>
+        <a href="" class="btn btn-primary">Oservaciones</a>
+        <a href="" class="btn btn-secondary">Volver</a>
+    </div>
+    
     <h3 class="mt-4">Turnos</h3>
     <table class="table table-striped">
         <thead>

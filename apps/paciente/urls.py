@@ -10,4 +10,6 @@ urlpatterns = [
     path('pacientes/', all_pacientes, name='pacientes'),
     path('diagnostico/<int:id>', diagnostico, name='diagnostico'),
     path('paciente/diagnostico/<int:id>', diagnostico, name='diagnostico'),
+    path('pacientes/dar_turno', page_buscar_paciente, name='buscar_paciente'),
+    path('pacientes/api/dar_turno', dar_turnos),
 ]
