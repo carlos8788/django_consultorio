@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from django.core.paginator import Paginator, EmptyPage
 from django.db.models import Q
@@ -120,7 +121,25 @@ def paciente(request, dni=None):
     except ValueError:
         # Manejar el error específico de ValueError aquí
         paciente = None
+    # print(paciente.get_paciente())
     return render(request, 'pages/paciente.html',{'paciente':paciente,'turnos': turnos_list, 'dnis': dnis})
+
+@login_required
+@require_POST
+def update_paciente(request, dni):
+    # Obtén los datos de las observaciones desde la solicitud
+    observaciones = request.POST.get('observaciones')
+
+    # Encuentra el paciente correspondiente en la base de datos
+    paciente = Paciente.objects.get(dni=dni)
+    print(paciente)
+    # Actualiza las observaciones
+    paciente.observaciones = observaciones
+    print(paciente.observaciones)
+    paciente.save()
+
+    # Devuelve una respuesta
+    return redirect(f'/turnos/paciente/dni={dni}')
 
 
 @login_required

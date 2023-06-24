@@ -13,5 +13,6 @@ urlpatterns = [
     path('pacientes/dar_turno', page_buscar_paciente, name='buscar_paciente'),
     path('pacientes/api/dar_turno', dar_turnos),
     path('pacientes/dar_turno/buscar_paciente/<str:cadena>', buscar_paciente_nombre, name='buscar_paciente'),
+    path('pacientes/api/actualizar_obs/<str:dni>', update_paciente, name='update_obs'),
 ]
 # http://localhost:8000/turnos/pacientes/dar_turno
