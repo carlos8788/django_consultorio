@@ -29,7 +29,7 @@ const filterInfo = (datos) => {
 }
 
 async function obtenerDatos() {
-    const response = await fetch('/turnos/pacientes/api/dar_turno');
+    const response = await fetch('/turnos/pacientes/api/obtener_turno');
     const datos = await response.json();
     return datos.pacientes;
 }

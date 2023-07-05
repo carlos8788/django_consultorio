@@ -38,7 +38,6 @@ else:
     ALLOWED_HOSTS.append(ENV)
 
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -51,7 +50,7 @@ INSTALLED_APPS = [
     "apps.home",
     "apps.paciente",
     'apps.obra_sociales',
-        
+
 ]
 
 if DEBUG:
@@ -68,7 +67,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 if DEBUG:
-    MIDDLEWARE.append("django_browser_reload.middleware.BrowserReloadMiddleware")
+    MIDDLEWARE.append(
+        "django_browser_reload.middleware.BrowserReloadMiddleware")
 
 ROOT_URLCONF = 'core.urls'
 
@@ -96,7 +96,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 
 if not DEBUG:
-# if DEBUG:
+    # if DEBUG:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
@@ -108,13 +108,24 @@ if not DEBUG:
         }
     }
 else:
-    
+
+    # DATABASES = {
+    #         'default': {
+    #             'ENGINE': 'django.db.backends.sqlite3',
+    #             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    #         }
+    #     }
     DATABASES = {
-            'default': {
-                'ENGINE': 'django.db.backends.sqlite3',
-                'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-            }
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'consultorio',
+            'USER': 'root',
+            'PASSWORD': '123456',
+            'HOST': 'localhost',
+            'PORT': '3306',
         }
+    }
+
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -162,12 +173,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ORIGIN = os.environ.get('ORIGIN')
 CSRF_TRUSTED_ORIGINS = [ORIGIN]
 
-SESSION_COOKIE_AGE = 1800 # duración de la sesión en segundos
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True # la sesión se cierra cuando el usuario cierra el navegador
+SESSION_COOKIE_AGE = 1800  # duración de la sesión en segundos
+# la sesión se cierra cuando el usuario cierra el navegador
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 # STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 
-# Para cuando alguien quiera entrar y no está logueado utilizamos 
+# Para cuando alguien quiera entrar y no está logueado utilizamos
 LOGIN_URL = 'login'
 if DEBUG:
     print('http://localhost:8000')

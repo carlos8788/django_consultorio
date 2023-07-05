@@ -147,8 +147,8 @@ def diagnostico(request, id):
     
     if request.method == 'POST':
 
-        body_unicode = request.body.decode('utf-8')
-        data = json.loads(body_unicode)
+        body= request.body.decode('utf-8')
+        data = json.loads(body)
 
         turno = Turno.objects.get(id=id)
         turno.diagnostico = data['diagnostico']
@@ -158,8 +158,7 @@ def diagnostico(request, id):
     else:
         turno = Turno.objects.get(id=int(id)).get_id_diag_pac()
         paciente = Paciente.objects.get(id=turno['paciente']).get_paciente()
-        # print(turno, 'TURNO_ID')
-        # print(paciente)
+
         json_turno = {
             'id':turno['id'],
             'nombre': paciente['nombre'],
@@ -188,16 +187,9 @@ def all_pacientes(request):
 
     return render(request, 'pages/pacientes.html', {'pagina': pagina_actual})
 
-def is_allowed_url(request):
-    allowed_url = os.environ.get('URL')
-    allowed_url += '/dar_turno'  # Reemplaza con la URL permitida
-    print(allowed_url)
-    return request.path == allowed_url
 
-
-# @user_passes_test(is_allowed_url)
 @login_required
-def dar_turnos(request):
+def obtener_turno(request):
     pacientes = Paciente.objects.all()
     pacientes = [p.get_paciente() for p in pacientes]
     def serializer_obra_social(paciente):
@@ -206,6 +198,7 @@ def dar_turnos(request):
     pacientes = [serializer_obra_social(pac) for pac in pacientes]
     
     return JsonResponse({'pacientes': pacientes}, status=200)
+
 @login_required
 def page_buscar_paciente(request):
     return render(request, 'pages/buscar_paciente.html')
@@ -219,3 +212,7 @@ def buscar_paciente_nombre(request, cadena):
     if not pacientes:
         return JsonResponse({'error': 'No se encontraron pacientes'}, status=404)
     return JsonResponse(pacientes, safe=False)
+
+@login_required
+def dar_turno(request):
+    pass
