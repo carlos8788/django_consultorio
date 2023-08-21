@@ -37,6 +37,8 @@
   color: aliceblue;
 }
 
+
+
 @media (max-width: 1150px) {
   .hero__img {
     width: 300px;

@@ -11,6 +11,7 @@ urlpatterns = [
     path('diagnostico/<int:id>', diagnostico, name='diagnostico'),
     path('paciente/diagnostico/<int:id>', diagnostico, name='diagnostico'),
     path('pacientes/dar_turno', page_buscar_paciente, name='buscar_paciente'),
+    path('pacientes/new_turno', new_turno, name='new_turno'),
     path('pacientes/api/obtener_turno', obtener_turno),
     path('pacientes/dar_turno/buscar_paciente/<str:cadena>', buscar_paciente_nombre, name='buscar_paciente'),
     path('pacientes/api/actualizar_obs/<str:dni>', update_paciente, name='update_obs'),
