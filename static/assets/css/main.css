@@ -1191,9 +1191,14 @@ section {
 --------------------------------------------------------------*/
 .clients {
   padding: 0 0 60px 0;
+  /* height: 600px; */
+  /* width: 300px; */
 }
 
+
 .clients .swiper-slide img {
+  /* height: 60px; */
+  width: 200px;
   opacity: 0.5;
   transition: 0.3s;
   filter: grayscale(100);
@@ -1202,6 +1207,10 @@ section {
 .clients .swiper-slide img:hover {
   filter: none;
   opacity: 1;
+}
+
+.sad_logo{
+  width: 130px !important;
 }
 
 /*--------------------------------------------------------------

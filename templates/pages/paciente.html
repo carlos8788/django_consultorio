@@ -26,18 +26,19 @@
                     <h5 class="modal-title">Título del Modal</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
-                <div class="modal-body">
-                    <form>
+                <form id="confirmarTurno">
+                    <div class="modal-body">
+
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Paciente:</label>
-                            <input type="text" class="form-control" id="recipient-name" value="{{ paciente }}" disabled>
+                            <input type="text" class="form-control" id="recipient-name" value="{{ paciente }}" name="paciente" disabled>
                         </div>
                         <div class="mb-3">
-                            <label for="message-text" class="col-form-label">Message:</label>
-                            <textarea class="form-control" id="message-text"></textarea>
+                            <label for="message-text" class="col-form-label">Comentario:</label>
+                            <textarea class="form-control" id="message-text" name="comentario"></textarea>
                         </div>
                         <div class="mb-3">
-                            <select class="form-select" aria-label="Default select example">
+                            <select class="form-select" name="fecha">
                                 <option selected disabled>Seleccione Fecha</option>
                                 {% for fecha in fechas %}
                                 <option value="{{fecha.id}}">{{fecha}}</option>p
@@ -45,19 +46,20 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <select class="form-select" aria-label="Default select example">
+                            <select class="form-select" name="horario">
                                 <option selected disabled>Seleccione Horario</option>
                                 {% for horario in horarios %}
                                 <option value="{{horario.id}}">{{horario}}</option>p
                                 {% endfor %}
                             </select>
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary">Guardar cambios</button>
-                </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary" >Confirmar turno</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
