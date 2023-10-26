@@ -110,7 +110,7 @@ def paciente(request, dni=None):
             paciente = Paciente.objects.get(dni=int(dni))
         elif dni_input:
             paciente = Paciente.objects.get(dni=dni_input)
-            print(paciente)
+            # print(paciente)
         else:
             paciente = Paciente.objects.get(dni=dni_select)
 
@@ -129,8 +129,8 @@ def paciente(request, dni=None):
         fechas = Fecha.objects.all()
         horarios = Hora.objects.all()
 
-        print(fechas)
-        print(horarios)
+        # print(fechas)
+        # print(horarios)
 
         context = {
             'paciente': paciente, 
@@ -160,7 +160,7 @@ def update_paciente(request, dni):
     print(paciente)
     # Actualiza las observaciones
     paciente.observaciones = observaciones
-    print(paciente.observaciones)
+    # print(paciente.observaciones)
     paciente.save()
 
     # Devuelve una respuesta
@@ -235,11 +235,11 @@ def page_buscar_paciente(request):
 
 @login_required
 def buscar_paciente_nombre(request, cadena):
-    print(cadena)
-    print(Paciente.objects.filter(Q(nombre__icontains=cadena)))
+    # print(cadena)
+    # print(Paciente.objects.filter(Q(nombre__icontains=cadena)))
     pacientes = list(Paciente.objects.filter(
         Q(nombre__icontains=cadena)).values())
-    print(pacientes)
+    # print(pacientes)
     if not pacientes:
         return JsonResponse({'error': 'No se encontraron pacientes'}, status=404)
     return JsonResponse(pacientes, safe=False)
