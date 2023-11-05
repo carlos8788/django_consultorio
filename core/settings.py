@@ -95,9 +95,10 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 
-if not DEBUG:
+if  DEBUG:
+# if not DEBUG:
     # if DEBUG:
-    DATABASES = {
+    # DATABASES = {
         # 'default': {
         #     'ENGINE': 'django.db.backends.mysql',
         #     'NAME': os.getenv('DB_NAME'),
@@ -106,10 +107,16 @@ if not DEBUG:
         #     'HOST': os.getenv('DB_HOST'),
         #     'PORT': os.getenv('DB_PORT'),
         # }
-        'default':{
-            
+        DATABASES = {
+            'default': {
+                'ENGINE': 'djongo',
+                'NAME': 'consultorio',
+                'ENFORCE_SCHEMA': False,
+                'CLIENT': {
+                    'host': 'mongodb+srv://carlos8788:0hM7ULTC83zJ01AN@consultorio.2qliuug.mongodb.net/consultorioBIOMED?retryWrites=true&w=majority',  # Reemplaza esto con tu URI de MongoDB Atlas.
+                }
+            }
         }
-    }
 else:
 
     # DATABASES = {
